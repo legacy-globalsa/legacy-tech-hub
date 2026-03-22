@@ -1,21 +1,13 @@
+import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import StatsBar from "@/components/StatsBar";
-import ServicesSection from "@/components/ServicesSection";
-import AboutSection from "@/components/AboutSection";
-import WhyChooseSection from "@/components/WhyChooseSection";
-import CTASection from "@/components/CTASection";
-import Footer from "@/components/Footer";
+import BrandBar from "@/components/BrandBar";
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="h-screen flex flex-col bg-background overflow-hidden">
+      <Navbar />
       <HeroSection />
-      <StatsBar />
-      <ServicesSection />
-      <AboutSection />
-      <WhyChooseSection />
-      <CTASection />
-      <Footer />
+      <BrandBar />
     </main>
   );
 };

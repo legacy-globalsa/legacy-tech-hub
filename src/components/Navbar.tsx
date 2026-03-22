@@ -1,73 +1,108 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/legatech-logo.png";
+import logo from "@/assets/LegaTechLogo.png";
 
-const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Contact", href: "#contact" },
+const leftLinks = [
+  { label: "Platform", to: "/" },
+  { label: "Solutions", to: "/solutions" },
+  { label: "About", to: "/about" },
+];
+
+const rightLinks = [
+  { label: "Services", to: "/services" },
+  { label: "Company", to: "/about" },
+  { label: "Contact", to: "/contact" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isActive = (to: string) => location.pathname === to;
 
   return (
-    <nav className="absolute top-0 left-0 right-0 z-50 px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl flex items-center justify-between h-20">
-        <a href="#" className="flex items-center gap-2">
-          <img src={logo} alt="LegaTech" className="h-8 w-auto" />
-        </a>
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/90 backdrop-blur-xl shadow-sm border-b border-border/40"
+          : "bg-background border-b border-transparent"
+      }`}
+    >
+      <div className="mx-auto max-w-7xl px-4 lg:px-6">
+        <div className="flex items-center justify-between h-14">
+          {/* Left links */}
+          <div className="hidden md:flex items-center gap-7 flex-1">
+            {leftLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.to}
+                className={`cursor-target text-[13px] font-medium transition-colors duration-200 hover:text-foreground ${
+                  isActive(link.to) ? "text-foreground" : "text-muted-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
 
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-hero-dark-foreground/70 hover:text-hero-dark-foreground transition-colors duration-200"
-            >
-              {link.label}
-            </a>
-          ))}
+          {/* Center logo */}
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <img src={logo} alt="LegaTech" className="h-14 w-auto" />
+          </Link>
+
+          {/* Right links */}
+          <div className="hidden md:flex items-center justify-end gap-7 flex-1">
+            {rightLinks.map((link) => (
+              <Link
+                key={link.label + link.to}
+                to={link.to}
+                className={`cursor-target text-[13px] font-medium transition-colors duration-200 hover:text-foreground ${
+                  isActive(link.to) ? "text-foreground" : "text-muted-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-foreground/70 p-1.5 rounded-lg hover:bg-secondary/80 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-
-        <a
-          href="#contact"
-          className="hidden md:inline-flex items-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity duration-200 active:scale-[0.97]"
-        >
-          Get in Touch
-        </a>
-
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-hero-dark-foreground/80"
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
       </div>
 
-      {open && (
-        <div className="md:hidden glass-card rounded-xl mx-2 p-4 mt-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
+      {/* Mobile menu */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ${
+          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="border-t border-border/40 bg-background px-4 pb-4 pt-2">
+          {[...leftLinks, ...rightLinks].map((link, i) => (
+            <Link
+              key={link.label + link.to + i}
+              to={link.to}
               onClick={() => setOpen(false)}
-              className="block py-3 px-4 text-sm font-medium text-hero-dark-foreground/80 hover:text-hero-dark-foreground transition-colors"
+              className="block py-2.5 px-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-lg transition-all duration-200"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
-            onClick={() => setOpen(false)}
-            className="block mt-2 text-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium"
-          >
-            Get in Touch
-          </a>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

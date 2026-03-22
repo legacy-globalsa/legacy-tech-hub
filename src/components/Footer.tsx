@@ -1,5 +1,6 @@
 import { Phone, Mail, Globe, MapPin } from "lucide-react";
-import logo from "@/assets/legatech-logo.png";
+import { Link } from "react-router-dom";
+import logo from "@/assets/LegaTechLogo.png";
 import ScrollReveal from "./ScrollReveal";
 
 const Footer = () => {
@@ -9,7 +10,9 @@ const Footer = () => {
         <ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="lg:col-span-2">
-              <img src={logo} alt="LegaTech" className="h-8 w-auto mb-4" />
+              <Link to="/">
+                <img src={logo} alt="LegaTech" className="h-16 w-auto mb-4 hover:opacity-80 transition-opacity" />
+              </Link>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-md mb-2">
                 Powered by Legacy Global Commercial Services Co.
               </p>
@@ -20,14 +23,12 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="font-display font-semibold text-foreground mb-4 text-sm">Services</h4>
+              <h4 className="font-display font-semibold text-foreground mb-4 text-sm">Quick Links</h4>
               <ul className="space-y-2.5 text-sm text-muted-foreground">
-                <li><a href="#services" className="hover:text-foreground transition-colors">AI Solutions</a></li>
-                <li><a href="#services" className="hover:text-foreground transition-colors">Smart Home & IoT</a></li>
-                <li><a href="#services" className="hover:text-foreground transition-colors">App & Web Dev</a></li>
-                <li><a href="#services" className="hover:text-foreground transition-colors">Creative Design</a></li>
-                <li><a href="#services" className="hover:text-foreground transition-colors">AR/VR Technologies</a></li>
-                <li><a href="#services" className="hover:text-foreground transition-colors">Tech Consulting</a></li>
+                <li><Link to="/services" className="hover:text-foreground transition-colors duration-200">Services</Link></li>
+                <li><Link to="/solutions" className="hover:text-foreground transition-colors duration-200">Solutions</Link></li>
+                <li><Link to="/about" className="hover:text-foreground transition-colors duration-200">About Us</Link></li>
+                <li><Link to="/contact" className="hover:text-foreground transition-colors duration-200">Contact</Link></li>
               </ul>
             </div>
 

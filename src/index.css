@@ -96,6 +96,96 @@
     background-clip: text;
   }
 
+  /* Animated moving gradient text */
+  .text-gradient-animate {
+    background: linear-gradient(
+      90deg,
+      hsl(174 62% 38%) 0%,
+      hsl(174 72% 55%) 25%,
+      hsl(24 85% 60%) 50%,
+      hsl(200 80% 55%) 75%,
+      hsl(174 62% 38%) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradientMove 5s ease-in-out infinite;
+  }
+
+  .text-gradient-animate-slow {
+    background: linear-gradient(
+      90deg,
+      hsl(174 62% 42%) 0%,
+      hsl(200 70% 55%) 30%,
+      hsl(174 72% 55%) 60%,
+      hsl(24 85% 60%) 80%,
+      hsl(174 62% 42%) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradientMove 10s ease-in-out infinite;
+  }
+
+  @keyframes textGradientMove {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Animated floating glow orb */
+  .glow-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  .glow-orb-2 {
+    animation-delay: -4s;
+    animation-duration: 11s;
+  }
+  .glow-orb-3 {
+    animation-delay: -2s;
+    animation-duration: 14s;
+  }
+
+  @keyframes orbFloat {
+    0%   { transform: translate(0px,  0px)   scale(1);   opacity: 0.55; }
+    25%  { transform: translate(20px, -30px)  scale(1.08); opacity: 0.7; }
+    50%  { transform: translate(-15px, 20px) scale(0.95); opacity: 0.5; }
+    75%  { transform: translate(25px,  10px)  scale(1.05); opacity: 0.65; }
+    100% { transform: translate(0px,  0px)   scale(1);   opacity: 0.55; }
+  }
+
+  /* Shimmering border for cards */
+  .shimmer-border {
+    position: relative;
+    background-clip: padding-box;
+  }
+  .shimmer-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      90deg,
+      hsl(174 62% 38% / 0.0) 0%,
+      hsl(174 62% 55% / 0.5) 40%,
+      hsl(24 85% 60% / 0.4) 60%,
+      hsl(174 62% 38% / 0.0) 100%
+    );
+    background-size: 300% 100%;
+    animation: shimmerBorder 4s linear infinite;
+    z-index: -1;
+  }
+  @keyframes shimmerBorder {
+    0%   { background-position: -100% 0; }
+    100% { background-position: 200% 0; }
+  }
+
   .hero-container {
     background: linear-gradient(
       145deg,
@@ -110,6 +200,45 @@
     background: hsl(0 0% 100% / 0.06);
     backdrop-filter: blur(16px);
     border: 1px solid hsl(0 0% 100% / 0.1);
+  }
+
+  .brand-bar-container {
+    background: linear-gradient(135deg, hsl(220 30% 10%) 0%, hsl(220 25% 14%) 100%);
+    border: 1px solid hsl(220 20% 20% / 0.5);
+  }
+
+  /* Animated soft gradient background for inner pages */
+  .page-gradient-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: 
+      radial-gradient(ellipse 80% 60% at 20% 30%, hsl(174 62% 38% / 0.04), transparent),
+      radial-gradient(ellipse 60% 80% at 80% 70%, hsl(24 85% 55% / 0.03), transparent),
+      radial-gradient(ellipse 50% 50% at 50% 50%, hsl(210 60% 60% / 0.02), transparent);
+    animation: gradientShift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes gradientShift {
+    0% {
+      background: 
+        radial-gradient(ellipse 80% 60% at 20% 30%, hsl(174 62% 38% / 0.04), transparent),
+        radial-gradient(ellipse 60% 80% at 80% 70%, hsl(24 85% 55% / 0.03), transparent),
+        radial-gradient(ellipse 50% 50% at 50% 50%, hsl(210 60% 60% / 0.02), transparent);
+    }
+    50% {
+      background: 
+        radial-gradient(ellipse 70% 70% at 70% 20%, hsl(174 62% 38% / 0.05), transparent),
+        radial-gradient(ellipse 80% 60% at 20% 80%, hsl(24 85% 55% / 0.04), transparent),
+        radial-gradient(ellipse 60% 40% at 60% 60%, hsl(260 60% 60% / 0.02), transparent);
+    }
+    100% {
+      background: 
+        radial-gradient(ellipse 60% 80% at 40% 60%, hsl(174 62% 38% / 0.04), transparent),
+        radial-gradient(ellipse 70% 50% at 60% 30%, hsl(24 85% 55% / 0.03), transparent),
+        radial-gradient(ellipse 50% 70% at 30% 80%, hsl(210 60% 60% / 0.03), transparent);
+    }
   }
 }
 
@@ -126,6 +255,29 @@
   .animate-fade-up-delay-3 {
     animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
   }
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out both;
+  }
+  .animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background-size: 200% 100%;
+  }
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+  .animate-orb-pulse {
+    animation: orbPulse 6s ease-in-out infinite;
+  }
+  .animate-orb-pulse-slow {
+    animation: orbPulse 10s ease-in-out infinite;
+    animation-delay: -3s;
+  }
 }
 
 @keyframes fadeUp {
@@ -139,4 +291,53 @@
     transform: translateY(0);
     filter: blur(0);
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.4; }
+  50%       { transform: scale(1.25); opacity: 0.7; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Hide default cursor globally on mouse devices — TargetCursor provides custom cursor */
+@media (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+/* Smooth page transitions */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus styles */
+*:focus-visible {
+  outline: 2px solid hsl(174 62% 38% / 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
